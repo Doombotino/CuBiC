@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl -L https://raw.githubusercontent.com/Doombotino/CuBiC/main/index.html -o existing_game.html)",
+      "Bash(mkdir -p css js)",
+      "Bash(python -m http.server 8000 --bind 127.0.0.1)",
+      "Bash(where python)",
+      "Bash(where node)",
+      "Bash(npx -y http-server -p 8000 -c-1 --cors)",
+      "Bash(timeout /t 3)",
+      "WebFetch(domain:transcension.mintlify.app)",
+      "Bash(curl -s \"https://transcension.mintlify.app/api-reference/welcome\")",
+      "Bash(curl -s \"https://transcension.mintlify.app/api-reference/cubic/create-game\")",
+      "Bash(\"C:\\Program Files\\nodejs\\node.exe\" server.js)",
+      "Bash(timeout /t 2)",
+      "Bash(curl -s \"https://transcension.mintlify.app/cubic/welcome\")",
+      "Bash(dir /b)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
