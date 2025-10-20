@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CuBiC - 3D Space Battle Map (16x16x16)</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- ES Module Shims for import map support -->
+  <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+
+  <!-- Import map for Three.js -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/",
+        "three/examples/jsm/controls/OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/controls/OrbitControls.js",
+        "three/examples/jsm/webxr/VRButton": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/webxr/VRButton.js",
+        "three/examples/jsm/webxr/XRControllerModelFactory": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/webxr/XRControllerModelFactory.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- Main Menu -->
+  <div id="menu">
+    <h1>CuBiC</h1>
+    <h2>3D Space Battle Map</h2>
+    <div id="gridSizeDiv" style="margin-bottom: 12px;">
+      <label for="gridSize" style="margin-right: 8px;">Grid Size:</label>
+      <select id="gridSize" style="padding: 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.5); color: #fff;">
+        <option value="8">8×8×8 (Fast)</option>
+        <option value="16" selected>16×16×16 (Standard)</option>
+      </select>
+    </div>
+    <button id="pcButton">PC Mode</button>
+    <button id="mobileButton">Mobile Mode</button>
+    <div id="version">v5.2 - Combat & Strategy Edition</div>
+    <div id="autoRotateDiv">
+      <input type="checkbox" id="autoRotate" />
+      <label for="autoRotate">Start with Auto-Rotation</label>
+    </div>
+  </div>
+
+  <!-- PC HUD -->
+  <div id="pcHud">
+    <h3>Spaceships</h3>
+    <div class="row">
+      <label>Ship Type:</label>
+      <select id="shipType">
+        <option value="SCOUT">Scout (100 Speed, 0 Attack)</option>
+        <option value="ATTACKER" selected>Attacker (50 Speed, 50 Attack)</option>
+        <option value="SNATCHER">Snatcher (100 Speed, 0 Attack - Steal Specialist)</option>
+      </select>
+    </div>
+    <div class="row">
+      <label>Spawn color:</label>
+      <select id="spawnColor"></select>
+      <button id="addShipBtn">Add Ship</button>
+    </div>
+
+    <div class="row">
+      <label>Selected ship:</label>
+      <select id="shipList"></select>
+      <button id="centerBtn" title="Center camera on ship">Center</button>
+      <button id="followBtn" title="Toggle follow">Follow: Off</button>
+    </div>
+
+    <div class="row">
+      <div class="pill">
+        <span class="chip" id="selChip"></span>
+        <span id="selMeta" class="muted">No ship selected</span>
+      </div>
+    </div>
+
+    <!-- Ship Stats Editor -->
+    <div class="row" style="flex-direction: column; gap: 8px;">
+      <label style="font-weight: bold;">Ship Stats (Total: 100)</label>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label style="width: 60px;">Speed:</label>
+        <input type="number" id="statSpeed" min="0" max="100" value="50" style="width: 60px; padding: 4px;" />
+        <span id="speedInfo" class="muted" style="font-size: 11px;"></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label style="width: 60px;">Attack:</label>
+        <input type="number" id="statAttack" min="0" max="100" value="50" style="width: 60px; padding: 4px;" />
+        <span class="muted" style="font-size: 11px;">(Higher = Win fights)</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button id="updateStatsBtn" style="flex: 1;">Update Stats</button>
+        <span id="statTotal" style="padding: 6px; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <label>Sprint mode:</label>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <input type="checkbox" id="sprintToggle" title="Enable fast movement without capturing">
+        <span style="font-size: 13px; color: #aaa;">Fast movement (no capture)</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="flyBtn">Fly 1 hop</button>
+      <button id="removeShipBtn">Remove Ship</button>
+      <button id="clearTrailsBtn">Clear Trails</button>
+    </div>
+
+    <div class="row">
+      <span class="muted">
+        Click ship, then click adjacent node to queue move. Moves execute on tick.
+      </span>
+    </div>
+  </div>
+
+  <!-- Tick Timer -->
+  <div id="tickTimer">
+    <div id="tickTimerBar">
+      <div id="tickTimerFill"></div>
+    </div>
+    <div id="tickTimerText">Next Tick: 5.0s</div>
+  </div>
+
+  <!-- Tick Rate Control (God Mode) -->
+  <div id="tickRateControl">
+    <div style="font-size: 12px; color: #888; margin-bottom: 5px;">⚡ God Mode: Tick Speed</div>
+    <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+      <button class="tick-rate-btn" data-rate="0.5">0.5x</button>
+      <button class="tick-rate-btn active" data-rate="1">1x</button>
+      <button class="tick-rate-btn" data-rate="2">2x</button>
+      <button class="tick-rate-btn" data-rate="5">5x</button>
+      <button class="tick-rate-btn" data-rate="10">10x</button>
+    </div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div id="leaderboard">
+    <h3>🏆 Territory</h3>
+    <div id="leaderboardContent"></div>
+  </div>
+
+  <!-- Auto Play Button -->
+  <button id="autoPlayBtnFloating">Auto Play: Off</button>
+
+  <!-- Return Button -->
+  <button id="returnButton">Return to Menu</button>
+
+  <!-- Error Notification -->
+  <div id="error"></div>
+
+  <!-- Server Warning -->
+  <div id="serverWarning" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,0,0,0.95); z-index:9999; padding:40px; text-align:center; color:#fff; font-size:20px;">
+    <h1 style="font-size:48px; margin-bottom:20px;">⚠️ SERVER REQUIRED ⚠️</h1>
+    <p style="font-size:24px; margin:20px 0;">You opened this file directly (file://).</p>
+    <p style="font-size:24px; margin:20px 0; font-weight:bold;">The game won't work this way!</p>
+    <hr style="margin:30px auto; width:50%; border:2px solid #fff;">
+    <h2 style="font-size:32px; margin:30px 0;">To play the game:</h2>
+    <ol style="font-size:22px; text-align:left; max-width:600px; margin:20px auto; line-height:1.8;">
+      <li>Close this browser tab</li>
+      <li>Double-click <strong>START_GAME.bat</strong> in the CuBiC folder</li>
+      <li>Wait for the server window to open</li>
+      <li>Open a NEW browser tab to: <strong>http://localhost:8000</strong></li>
+    </ol>
+    <hr style="margin:30px auto; width:50%; border:2px solid #fff;">
+    <p style="font-size:18px; margin:20px 0; opacity:0.8;">Alternative: Open <strong>existing_game.html</strong> instead (original version, no server needed)</p>
+  </div>
+
+  <script>
+    // Check if opened via file:// protocol
+    if (window.location.protocol === 'file:') {
+      document.getElementById('serverWarning').style.display = 'block';
+      document.getElementById('menu').style.display = 'none';
+    }
+  </script>
+
+  <!-- Main application script -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

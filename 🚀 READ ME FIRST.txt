@@ -1,0 +1,68 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║              🎮  HOW TO PLAY CuBiC  🎮                      ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+📍 STEP 1: Start the Server
+────────────────────────────────────────────────────────
+Double-click this file:
+
+    ➜  START_GAME.bat
+
+You'll see a black window pop up saying the server is running.
+⚠️  DON'T CLOSE THIS WINDOW!
+
+
+📍 STEP 2: Open Your Browser
+────────────────────────────────────────────────────────
+Open your web browser and go to:
+
+    ➜  http://localhost:8000
+
+(Type it in the address bar, not Google!)
+
+
+📍 STEP 3: Play!
+────────────────────────────────────────────────────────
+Click one of the mode buttons:
+    • PC Mode
+    • Mobile Mode
+    • VR Mode
+
+Enjoy! 🚀
+
+
+═══════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANT: Don't double-click index.html!
+    It won't work that way!
+    You MUST use START_GAME.bat first.
+
+═══════════════════════════════════════════════════════════════
+
+
+❓ TROUBLESHOOTING
+────────────────────────────────────────────────────────
+
+Problem: "Nothing happens when I click START_GAME.bat"
+Solution: You might not have Node.js installed.
+          Install it from: https://nodejs.org/
+          Then try again.
+
+Problem: "The buttons don't work!"
+Solution: You opened index.html directly.
+          Close it and use START_GAME.bat instead.
+          Then go to http://localhost:8000
+
+Problem: "I just want to play NOW!"
+Solution: Open "existing_game.html" instead.
+          That's the old version - works without a server.
+          (But it's less organized code-wise)
+
+
+═══════════════════════════════════════════════════════════════
+
+Need more help? See QUICKSTART.md
+
