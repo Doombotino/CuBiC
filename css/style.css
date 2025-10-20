@@ -1,0 +1,349 @@
+/* CuBiC - Global Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Menu */
+#menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#autoRotateDiv {
+  margin-top: 16px;
+}
+
+/* Buttons */
+button {
+  padding: 10px 16px;
+  margin: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#returnButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  display: none;
+}
+
+#autoPlayBtnFloating {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 152;
+  padding: 8px 14px;
+  font-size: 14px;
+  display: none;
+  background: #4caf50;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Error notification */
+#error {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255, 0, 0, 0.85);
+  padding: 10px 12px;
+  border-radius: 6px;
+  display: none;
+  z-index: 200;
+}
+
+/* Version info */
+#version {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* PC HUD */
+#pcHud {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  z-index: 150;
+  display: none;
+  max-width: 380px;
+  backdrop-filter: blur(4px);
+}
+
+#pcHud h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: move;
+}
+
+#pcHud .row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+#pcHud label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+#pcHud select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+#pcHud .muted {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+/* UI Components */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+}
+
+.chip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Tick Timer */
+#tickTimer {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 20, 20, 0.9);
+  border: 2px solid rgba(76, 175, 80, 0.5);
+  border-radius: 10px;
+  padding: 12px 20px;
+  z-index: 151;
+  display: none;
+  min-width: 200px;
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+#tickTimerBar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+#tickTimerFill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  transition: width 0.05s linear;
+  width: 100%;
+}
+
+#tickTimerText {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+/* Tick Rate Control (God Mode) */
+#tickRateControl {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 10px;
+  padding: 12px 16px;
+  z-index: 151;
+  display: none;
+  backdrop-filter: blur(6px);
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.tick-rate-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 50px;
+}
+
+.tick-rate-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  color: #fff;
+  border-color: rgba(255, 215, 0, 0.8);
+  transform: translateY(-2px);
+}
+
+.tick-rate-btn.active {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #000;
+  border-color: #ffd700;
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Leaderboard */
+#leaderboard {
+  position: fixed;
+  top: 90px;
+  right: 16px;
+  background: rgba(20, 20, 20, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  z-index: 150;
+  display: none;
+  min-width: 200px;
+  backdrop-filter: blur(6px);
+}
+
+#leaderboard h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 8px;
+}
+
+#leaderboard .team-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  margin: 4px 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+}
+
+#leaderboard .team-score:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#leaderboard .team-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#leaderboard .team-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#leaderboard .team-lines {
+  font-weight: 700;
+  color: #4caf50;
+}
+
+/* Movement Mode Selector */
+.mode-selector {
+  display: flex;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.mode-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+.mode-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.mode-btn.active {
+  background: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
+}
+
+.mode-btn.capture {
+  border-color: rgba(255, 200, 0, 0.5);
+}
+
+.mode-btn.capture.active {
+  background: #ffc800;
+  border-color: #ffc800;
+}
+
+.mode-btn.steal {
+  border-color: rgba(255, 50, 50, 0.5);
+}
+
+.mode-btn.steal.active {
+  background: #ff3232;
+  border-color: #ff3232;
+}
